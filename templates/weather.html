@@ -62,9 +62,9 @@
           {% set recommendation = data.suggestion.strip() %} {% set image_map =
           { "❌ Not a good day for laundry. Expect precipitation.":
           "no.gif", "⚠️ It's humid today. Clothes might dry slowly.":
-          "not_sure.png", "✅ Windy and dry – great for outdoor drying!":
-          "good.png", "✅ Weather looks fine for laundry.": "good.png" }
-          %} {% set image_file = image_map.get(recommendation, "good.png") %}
+          "not_sure.gif", "✅ Windy and dry – great for outdoor drying!":
+          "good.gif", "✅ Weather looks fine for laundry.": "good.gif" }
+          %} {% set image_file = image_map.get(recommendation, "good.gif") %}
 
           <img
             src="{{ url_for('static', filename='images/' + image_file) }}"
