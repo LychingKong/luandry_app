@@ -5,7 +5,7 @@ from pytz import timezone
 
 app = Flask(__name__)
 
-API_KEY = '495900e34db6443ab0772932251304'
+API_KEY = 'b11d134a90f74493be653218250105'
 FORECAST_URL = "http://api.weatherapi.com/v1/forecast.json?"
 
 @app.route("/", methods=["GET", "POST"])
@@ -86,5 +86,5 @@ def laundry_details(city):
     return render_template("laundry.html", city=city.title(), forecast=time_precip, tip=tip)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
-    
+    # app.run(host='0.0.0.0',debug=True)
+    app.run(debug=True)
