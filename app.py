@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import requests
 from datetime import datetime
 from pytz import timezone
+import re
 
 app = Flask(__name__)
 
@@ -11,9 +12,25 @@ FORECAST_URL = "http://api.weatherapi.com/v1/forecast.json?"
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        city = request.form.get("city")
-        if city:
-            return get_weather_data(city)
+        city = request.form.get("city", "").strip()
+        
+        # Normalize spaces
+        city = re.sub(r'\s+', ' ', city)
+        
+        # Validate input
+        if not city:
+            return render_template("index.html", error="City name cannot be empty.")
+        
+        if not re.match(r"^[a-zA-Z\s\-]+$", city):
+            return render_template("index.html", error="Please enter a valid city name.")
+        
+        # Logic check: city should be 1-2 words with realistic word lengths
+        words = city.split()
+        if len(words) > 2 or any(len(w) <= 2 for w in words):
+            return render_template("index.html", error="Please enter a realistic city name.")
+        
+        return get_weather_data(city)
+    
     return render_template("index.html")
 
 def get_weather_data(city_name):
